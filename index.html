@@ -77,7 +77,8 @@
   .scale{grid-template-columns:repeat(4,1fr); gap:10px}
   @media(max-width:560px){.scale{grid-template-columns:repeat(2,1fr)}}
   .opt{display:flex; align-items:center; justify-content:center; text-align:center; font-weight:600; width:100%; background:var(--light); border:2px solid transparent; border-radius:12px; padding:14px 8px; font-size:.95rem; cursor:pointer; transition:border-color .12s, background .12s; font-family:inherit; color:var(--dark)}
-  .opt:hover{border-color:var(--navy)}
+  @media(hover:hover) and (pointer:fine){ .opt:hover{border-color:var(--navy)} }
+  .opt{-webkit-tap-highlight-color:transparent}
   .opt.selected{border-color:var(--safran); background:#FCF3DC}
   .nav{display:flex; justify-content:space-between; margin-top:26px; gap:12px; flex-wrap:wrap}
 
@@ -137,12 +138,17 @@
   /* ---- Résultats complets : masqués à l'écran, visibles à l'impression et pour la capture PDF ---- */
   #full-results{display:none}
   .pdf-mode #full-results{display:block; position:absolute; left:-12000px; top:0; width:840px; background:#fff}
+  .card-pagefoot{display:none}
   .disclaimer{background:var(--light); border-radius:12px; padding:16px 20px; margin-top:26px; font-size:.83rem; color:var(--gray)}
   footer{background:var(--navy); color:#9FB0C8; text-align:center; padding:20px; font-size:.82rem; margin-top:20px}
   @media(prefers-reduced-motion:reduce){*{transition:none !important}}
   @media print{
     header, .nav, .btn, footer, #mini-synth{display:none !important}
     #full-results{display:block !important; position:static !important; width:auto !important}
+    /* Un modèle par page pleine, avec pied « Page X / Y » */
+    #res-models .model-card{page-break-before:always; break-before:page; position:relative; min-height:86vh; font-size:.93em; padding-bottom:34px}
+    #res-models .model-card:first-child{page-break-before:auto; break-before:auto; min-height:70vh}
+    .card-pagefoot{display:block !important; position:absolute; bottom:8px; right:16px; font-size:.72rem; color:#666}
     #print-banner{display:block !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
     #print-footer{display:block !important; position:fixed; bottom:0; left:0; right:0; -webkit-print-color-adjust:exact; print-color-adjust:exact}
     #results .wrap{padding-bottom:70px}
@@ -325,7 +331,7 @@
     </div>
     <p id="res-note" style="color:var(--gray); font-size:.8rem; margin-top:10px">✅ Vos résultats ont bien été enregistrés. Le dossier complet (les 11 modèles) pourra vous être remis et commenté par votre formateur.</p>
     <div id="print-footer">
-      Stéphane Demarquay &nbsp;•&nbsp; Stratégies de Développement &nbsp;•&nbsp; Bourges — Centre-Val de Loire
+      © Stratégies de Développement — Stéphane Demarquay · Tous droits réservés &nbsp;•&nbsp; Bourges — Centre-Val de Loire
       <div class="pf-slogan">« Développer les personnes, révéler les organisations »</div>
     </div>
   </div>
@@ -553,6 +559,7 @@ function renderQ(){
   $("plabel").textContent = "Affirmation "+(qIndex+1)+" / "+total;
   $("qtitle").textContent = "« "+questions[qIndex].t+" »";
   const opts=$("opts"); opts.innerHTML="";
+  if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
   SCALE.forEach(([lab,val])=>{
     const b=document.createElement("button");
     b.className="opt"+(answers[qIndex]===val?" selected":"");
@@ -780,6 +787,12 @@ function renderResultsView(r, meta){
   };
   if($("mini-synth")) $("mini-synth").innerHTML = '<div class="mini-band" style="background:'+bandBg+'">'+pcmTops.map(hexSvg).join("")+'</div>';
 
+  const cards=[...document.querySelectorAll("#res-models .model-card")];
+  cards.forEach((c,i)=>{
+    const f=document.createElement("div"); f.className="card-pagefoot";
+    f.textContent="Page "+(i+1)+" / "+cards.length;
+    c.appendChild(f);
+  });
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
     document.querySelectorAll(".bar-fill").forEach(el=>el.style.width=el.dataset.w+"%");
   }));
@@ -840,12 +853,16 @@ function saveResult(r){
 
 /* ================== ESPACE FORMATEUR (mot de passe : 1312) ================== */
 /* ---- Configuration : mot de passe + synchronisation centralisée ---- */
-const CFG={pass:"1312", endpoint:""};
+/* Service de synchronisation de Stratégies de Développement : intégré d'origine.
+   Chaque téléphone qui ouvre cette page envoie donc automatiquement ses résultats
+   à l'espace formateur, sans aucun réglage. (Modifiable dans ⚙️ Réglages.) */
+const ENDPOINT_DEFAUT="https://script.google.com/macros/s/AKfycbwa337OW2GKZxBZbUk8ZPLuhmugkfmbA_Mb82aR0ES4u1eW1dw5w374ufmX8cPWsGFI/exec";
+const CFG={pass:"1312", endpoint:ENDPOINT_DEFAUT};
 let cfgLoaded=null;
 function loadCfg(){
   if(!cfgLoaded) cfgLoaded=(async()=>{
     try{ const l=await store.list("gt:cfg"); const c=l["gt:cfg"];
-      if(c){ if(c.pass) CFG.pass=c.pass; if(typeof c.endpoint==="string") CFG.endpoint=c.endpoint; }
+      if(c){ if(c.pass) CFG.pass=c.pass; if(typeof c.endpoint==="string" && c.endpoint) CFG.endpoint=c.endpoint; }
     }catch(e){}
   })();
   return cfgLoaded;
@@ -926,7 +943,7 @@ async function adminRefresh(){
       }
       syncNote=" · synchronisation ✓ (tous les appareils)";
     } else syncNote=" · ⚠️ synchronisation injoignable — résultats de cet appareil seulement";
-  } else syncNote=" · synchronisation non configurée (⚙️ Réglages) — résultats de cet appareil seulement";
+  } else syncNote=" · synchronisation désactivée — résultats de cet appareil seulement";
   const recs = Object.entries(adminCache)
     .map(([k,v])=>({k:k, v:v}))
     .filter(x=>x.v && x.v.r && x.v.date)
