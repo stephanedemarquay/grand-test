@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!--
+  ============================================================================
+  LE GRAND TEST DES FAMILLES D'OUTILS — 11 modèles · 4 familles
+  ============================================================================
+  Conception, programmation et contenus pédagogiques : Stéphane Demarquay
+  Stratégies de Développement — Bourges, Centre-Val de Loire
+  « Développer les personnes, révéler les organisations »
+  © Stéphane Demarquay — Tous droits réservés.
+  Toute reproduction ou modification sans autorisation est interdite.
+  ============================================================================
+-->
+
+<head>
+<meta charset="UTF-8">
+<meta name="author" content="Stéphane Demarquay — Stratégies de Développement">
+<meta name="copyright" content="© Stéphane Demarquay — Tous droits réservés">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le grand test des 4 modèles — DISC · Process Com · Insights · HBDI | Stratégies de Développement</title>
+<style>
+  :root{
+    --navy:#16355C; --navy2:#1E4275; --safran:#E9A820; --light:#F5F5F5; --dark:#333333; --gray:#6B7280;
+    --red:#C0392B; --yel:#E9A820; --grn:#2E9E5B; --blu:#2C6FBB;
+    --emp:#D96C8E; --ana:#2C6FBB; --per:#5B4E9E; --ima:#607D8B; --pro:#C0392B; --ene:#E9A820;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  body{font-family:"Segoe UI", Calibri, Arial, sans-serif; color:var(--dark); background:#fff; line-height:1.55}
+  h1,h2,h3,.btn,.kicker,.seg-btn{font-family:Arial, "Segoe UI", sans-serif}
+  .wrap{max-width:880px; margin:0 auto; padding:0 20px}
+
+  header{background:var(--navy); color:#fff; padding:26px 0 30px}
+  .brand{display:flex; align-items:center; gap:16px}
+  .kicker{color:var(--safran); font-weight:bold; font-size:.72rem; letter-spacing:.28em; text-transform:uppercase}
+  header h1{font-size:1.6rem; margin-top:2px}
+  header p{color:#C9D4E4; font-size:.92rem; margin-top:4px}
+
+  .card{background:#fff; border:1px solid #E3E6EB; border-radius:14px; padding:24px; box-shadow:0 4px 14px rgba(22,53,92,.07)}
+  .btn{display:inline-block; border:none; cursor:pointer; border-radius:999px; padding:12px 26px; font-weight:bold; font-size:.95rem; transition:transform .12s ease, box-shadow .12s ease}
+  .btn:focus-visible,.seg-btn:focus-visible,.opt:focus-visible{outline:3px solid var(--safran); outline-offset:2px}
+  .btn-primary{background:var(--safran); color:var(--navy)}
+  .btn-primary:hover{transform:translateY(-1px); box-shadow:0 6px 14px rgba(233,168,32,.4)}
+  .btn-ghost{background:transparent; color:var(--navy); border:2px solid var(--navy)}
+  .btn-ghost:hover{background:var(--navy); color:#fff}
+  .btn:disabled{opacity:.4; cursor:not-allowed; transform:none; box-shadow:none}
+
+  #home{padding:40px 0 60px}
+  .intro{font-size:1.02rem; max-width:700px}
+  .main-card{margin-top:26px; display:grid; grid-template-columns:1.15fr .85fr; gap:26px; align-items:start}
+  @media(max-width:720px){.main-card{grid-template-columns:1fr}}
+  .main-card h2{color:var(--navy); font-size:1.3rem; margin:10px 0 8px}
+  .main-card p{font-size:.93rem; color:var(--gray)}
+  .fam-title{font-family:Arial;font-weight:bold;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#B8860B;margin:14px 0 6px}
+  .models{display:grid; gap:8px; margin-top:2px}
+  .model-line{display:flex; align-items:center; gap:10px; font-size:.9rem; text-decoration:none; color:var(--dark); background:var(--light); border-radius:10px; padding:9px 12px; border:2px solid transparent; transition:border-color .12s}
+  .model-line:hover{border-color:var(--safran)}
+  .model-line .mgo{margin-left:auto; color:#B8860B; font-weight:bold; font-size:.78rem; white-space:nowrap}
+  .model-line .mchip{flex:none; width:26px; height:26px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:bold; font-size:.75rem; font-family:Arial}
+  .seg-group{margin:14px 0}
+  .seg-label{display:block; font-size:.72rem; font-weight:bold; letter-spacing:.14em; text-transform:uppercase; color:var(--gray); margin-bottom:6px}
+  .seg{display:flex; background:var(--light); border-radius:999px; padding:4px; gap:4px}
+  .seg-btn{flex:1; border:none; background:transparent; border-radius:999px; padding:8px 4px; font-size:.76rem; font-weight:bold; color:var(--gray); cursor:pointer; transition:background .12s, color .12s}
+  .seg-btn.selected{background:var(--navy); color:#fff}
+  .seg-btn .sub{display:block; font-weight:normal; font-size:.7rem; opacity:.75}
+  .hex{width:52px; height:58px; clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); display:flex; align-items:center; justify-content:center; font-weight:bold; color:#fff; font-size:1.15rem; font-family:Arial}
+  .rules{background:#FCF3DC; border-radius:12px; padding:16px 20px; margin-top:28px; font-size:.9rem}
+  .rules strong{color:var(--navy)}
+
+  #quiz{display:none; padding:36px 0 60px}
+  .ctx-badge{display:inline-block; background:var(--light); color:var(--navy); font-size:.75rem; font-weight:bold; border-radius:999px; padding:4px 12px; margin-left:8px; vertical-align:middle}
+  .progress-track{height:8px; background:var(--light); border-radius:99px; overflow:hidden; margin:10px 0 4px}
+  .progress-fill{height:100%; width:0; background:var(--safran); border-radius:99px; transition:width .3s ease}
+  .progress-label{font-size:.8rem; color:var(--gray); text-align:right}
+  .qtitle{color:var(--navy); font-size:1.26rem; margin:22px 0 4px}
+  .qhelp{color:var(--gray); font-size:.88rem; margin-bottom:18px}
+  .options{display:grid; gap:12px}
+  .scale{grid-template-columns:repeat(4,1fr); gap:10px}
+  @media(max-width:560px){.scale{grid-template-columns:repeat(2,1fr)}}
+  .opt{display:flex; align-items:center; justify-content:center; text-align:center; font-weight:600; width:100%; background:var(--light); border:2px solid transparent; border-radius:12px; padding:14px 8px; font-size:.95rem; cursor:pointer; transition:border-color .12s, background .12s; font-family:inherit; color:var(--dark)}
+  .opt:hover{border-color:var(--navy)}
+  .opt.selected{border-color:var(--safran); background:#FCF3DC}
+  .nav{display:flex; justify-content:space-between; margin-top:26px; gap:12px; flex-wrap:wrap}
+
+  #results{display:none; padding:36px 0 60px}
+  .model-card{margin-top:22px}
+  .res-head{display:flex; align-items:center; gap:16px; flex-wrap:wrap}
+  .res-head .hex{width:64px; height:72px; font-size:1.5rem}
+  .res-head h2{color:var(--navy); font-size:1.28rem}
+  .res-head .model-tag{font-size:.72rem; font-weight:bold; letter-spacing:.18em; text-transform:uppercase; color:#B8860B}
+  .res-head .sub{color:var(--gray); font-size:.9rem}
+  .res-desc{margin:12px 0 4px; font-size:.96rem}
+  .bars{margin:18px 0 6px; display:grid; gap:12px}
+  .bar-row{display:grid; grid-template-columns:250px 1fr 52px; gap:12px; align-items:center; font-size:.92rem}
+  @media(max-width:560px){.bar-row{grid-template-columns:105px 1fr 46px}}
+  .bar-name{font-weight:600}
+  .bar-track{height:15px; background:var(--light); border-radius:99px; overflow:hidden}
+  .bar-fill{height:100%; width:0; border-radius:99px; transition:width .8s cubic-bezier(.2,.7,.3,1)}
+  .bar-val{font-weight:bold; color:var(--navy); text-align:right}
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px}
+  @media(max-width:640px){.duo{grid-template-columns:1fr}}
+  .mini{border-radius:10px; padding:13px 16px; font-size:.88rem}
+  .mini h4{font-size:.82rem; color:var(--navy); margin-bottom:5px; font-family:Arial}
+  .mini ul{padding-left:16px}
+  .mini li{margin-bottom:3px}
+
+  /* Synthèse */
+  .synth{background:var(--navy); color:#fff; border:none}
+  .synth h2{color:#fff; font-size:1.3rem}
+  .synth .kicker{margin-bottom:4px}
+  .synth-table{width:100%; border-collapse:collapse; margin:16px 0 6px; font-size:.92rem}
+  .synth-table th{color:var(--safran); text-align:left; font-family:Arial; font-size:.75rem; letter-spacing:.1em; text-transform:uppercase; padding:6px 8px; border-bottom:1px solid #2E4E7E}
+  .synth-table td{padding:9px 8px; border-bottom:1px solid #2E4E7E; vertical-align:middle}
+  .synth-table .schip{display:inline-block; width:16px; height:16px; border-radius:50%; margin-right:8px; vertical-align:-2px}
+  .synth-table .bold{font-weight:bold}
+  .synth-phrase{background:var(--navy2); border-radius:12px; padding:16px 18px; margin-top:14px; font-size:.98rem}
+  .synth-phrase strong{color:var(--safran)}
+  .synth-note{color:#9FB0C8; font-size:.8rem; margin-top:12px}
+
+  .inp{width:100%; border:2px solid #E3E6EB; border-radius:10px; padding:10px 12px; font-size:.95rem; font-family:inherit; color:var(--dark); background:var(--light)}
+  .inp:focus{outline:none; border-color:var(--safran); background:#fff}
+
+  /* ---- Bandeau bleu d'impression (1re page uniquement) ---- */
+  #print-banner{display:none; background:var(--navy); color:#fff; border-radius:12px; padding:18px 22px; margin-bottom:16px}
+  #print-banner .pb-flex{display:flex; align-items:center; gap:16px}
+  #print-banner .pb-name{font-family:Arial; font-weight:bold; font-size:1.15rem}
+  #print-banner .pb-line{color:#C9D4E4; font-size:.95rem; margin-top:3px}
+  /* ---- Pied de page bleu (répété sur chaque page imprimée) ---- */
+  #print-footer{display:none; background:var(--navy); text-align:center; padding:9px 10px; font-size:.8rem; color:#C9D4E4}
+  #print-footer .pf-slogan{color:var(--safran); font-style:italic; margin-top:2px}
+  .pdf-mode .hex{clip-path:none !important; border-radius:14px}
+
+
+  /* ---- Synthèse minimale à l'écran ---- */
+  #mini-synth{margin-top:18px}
+  .mini-band{border-radius:16px; min-height:150px; display:flex; align-items:center; justify-content:center; gap:22px; padding:26px 18px; box-shadow:0 6px 18px rgba(22,53,92,.18); flex-wrap:wrap}
+  .mini-hex{filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
+  /* ---- Résultats complets : masqués à l'écran, visibles à l'impression et pour la capture PDF ---- */
+  #full-results{display:none}
+  .pdf-mode #full-results{display:block; position:absolute; left:-12000px; top:0; width:840px; background:#fff}
+  .disclaimer{background:var(--light); border-radius:12px; padding:16px 20px; margin-top:26px; font-size:.83rem; color:var(--gray)}
+  footer{background:var(--navy); color:#9FB0C8; text-align:center; padding:20px; font-size:.82rem; margin-top:20px}
+  @media(prefers-reduced-motion:reduce){*{transition:none !important}}
+  @media print{
+    header, .nav, .btn, footer, #mini-synth{display:none !important}
+    #full-results{display:block !important; position:static !important; width:auto !important}
+    #print-banner{display:block !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    #print-footer{display:block !important; position:fixed; bottom:0; left:0; right:0; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+    #results .wrap{padding-bottom:70px}
+    .card{box-shadow:none; border:1px solid #ccc; break-inside:avoid}
+    body{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+  }
+  /* ---- Espace formateur ---- */
+  .adm-row{display:flex; align-items:center; gap:10px; width:100%; background:#fff; border:1px solid #E2E6EE;
+    border-radius:12px; padding:12px 14px; margin-bottom:8px; cursor:pointer; text-align:left; font-family:inherit; font-size:1rem}
+  .adm-row:active{background:#F2F5FA}
+  .adm-main{flex:1; min-width:0}
+  .adm-title{font-weight:bold; color:var(--navy); font-size:.98rem; word-break:break-word}
+  .adm-sub{color:var(--gray); font-size:.8rem; margin-top:2px}
+  .adm-open{color:#B8860B; font-size:.85rem; white-space:nowrap}
+  .adm-del{background:none; border:none; font-size:1.05rem; cursor:pointer; opacity:.55; padding:6px}
+  .adm-del:active{opacity:1}
+  /* ---- Vue formateur : dossier complet visible à l'écran ---- */
+  body.admin-view #full-results{display:block}
+  body.admin-view #print-banner{display:block}
+  body.admin-view #results .nav{display:none}
+  body.admin-view #admin-bar{display:flex !important}
+  body.admin-view #res-note{display:none}
+  /* ---- Confort tactile (iPhone / Android) ---- */
+  input.inp, .seg-btn, .btn{font-size:16px} /* évite le zoom automatique iOS à la saisie */
+  @media (max-width:640px){
+    .btn{padding:13px 16px; width:100%}
+    .nav{flex-direction:column; align-items:stretch; gap:8px}
+    #admin-bar{flex-direction:column}
+    .options.scale button{padding:15px 14px; font-size:1rem}
+    .mini-band{min-height:120px; gap:14px; padding:20px 12px}
+    .bar-row{grid-template-columns:1fr !important; gap:3px}
+    .bar-val{text-align:left}
+    .synth-table{font-size:.78rem}
+    .synth-table th, .synth-table td{padding:5px 6px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg width="62" height="70" viewBox="0 0 100 112" aria-label="Logo Stratégies de Développement">
+        <polygon points="50,4 95,30 95,82 50,108 5,82 5,30" fill="#fff" stroke="#16355C" stroke-width="8" stroke-linejoin="round"/>
+        <text x="50" y="71" text-anchor="middle" font-family="Arial" font-size="42" font-weight="bold"><tspan fill="#16355C">S</tspan><tspan fill="#E9A820">D</tspan></text>
+      </svg>
+      <div>
+        <div class="kicker">Auto-diagnostic &nbsp;•&nbsp; Outil pédagogique</div>
+        <h1>Le grand test des familles d'outils — résultats confidentiels</h1>
+        <p>Un seul questionnaire &nbsp;•&nbsp; onze lectures de votre profil, réparties en 4 grandes familles d'outils.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ACCUEIL ================= -->
+<section id="home">
+  <div class="wrap">
+    <p class="intro">Bienvenue ! Répondez à <strong>une seule série d'affirmations</strong> : le logiciel calcule automatiquement vos résultats selon les <strong>quatre grands modèles comportementaux</strong>, puis vous livre une synthèse très simple. Répondez spontanément : il n'y a ni bonne ni mauvaise réponse.</p>
+
+    <div class="card main-card">
+      <div>
+        <div class="hex" style="background:var(--navy)">4×1</div>
+        <h2>Un questionnaire, quatre résultats</h2>
+        <p>Chaque affirmation nourrit un ou plusieurs modèles. Cliquez sur un modèle pour découvrir sa fiche explicative :</p>
+        <div class="fam-title">Famille 1 — Modèles typologiques</div>
+        <div class="models">
+          <a class="model-line" href="fiche_mbti.html"><span class="mchip" style="background:var(--per)">M</span><span><strong>MBTI</strong> — les 16 types (4 dichotomies)</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_enneagramme.html"><span class="mchip" style="background:var(--ima)">E</span><span><strong>Ennéagramme</strong> — les 9 types</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_processcom.html"><span class="mchip" style="background:var(--emp)">P</span><span><strong>Process Com</strong> — les 6 types</span><span class="mgo">→ fiche</span></a>
+        </div>
+        <div class="fam-title">Famille 2 — Modèles de traits</div>
+        <div class="models">
+          <a class="model-line" href="fiche_bigfive.html"><span class="mchip" style="background:var(--grn)">B</span><span><strong>Big Five (OCEAN)</strong> — les 5 grands traits</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_16pf.html"><span class="mchip" style="background:var(--blu)">16</span><span><strong>16PF de Cattell</strong> — les facteurs de personnalité</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_hogan.html"><span class="mchip" style="background:var(--navy)">H</span><span><strong>Hogan</strong> — les échelles du potentiel</span><span class="mgo">→ fiche</span></a>
+        </div>
+        <div class="fam-title">Famille 3 — Modèles comportementaux</div>
+        <div class="models">
+          <a class="model-line" href="fiche_disc.html"><span class="mchip" style="background:var(--red)">D</span><span><strong>DISC</strong> — les 4 couleurs</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_insights.html"><span class="mchip" style="background:var(--grn)">I</span><span><strong>Insights Discovery</strong> — les 4 énergies</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_hbdi.html"><span class="mchip" style="background:var(--blu)">H</span><span><strong>HBDI</strong> — les préférences cérébrales</span><span class="mgo">→ fiche</span></a>
+        </div>
+        <div class="fam-title">Famille 4 — Modèles de rôles et de forces</div>
+        <div class="models">
+          <a class="model-line" href="fiche_belbin.html"><span class="mchip" style="background:var(--pro)">B</span><span><strong>Belbin</strong> — les 9 rôles en équipe</span><span class="mgo">→ fiche</span></a>
+          <a class="model-line" href="fiche_clifton.html"><span class="mchip" style="background:var(--yel)">C</span><span><strong>CliftonStrengths</strong> — les 34 talents (4 domaines)</span><span class="mgo">→ fiche</span></a>
+        </div>
+        <p style="margin-top:12px"><em>+ une synthèse express de votre portrait, en un tableau et une phrase.</em></p>
+      </div>
+      <div>
+        <div class="seg-group">
+          <span class="seg-label">Vos nom et prénom <span style="color:var(--red)">*</span></span>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+            <input type="text" id="inp-nom" class="inp" placeholder="Nom" autocomplete="family-name">
+            <input type="text" id="inp-prenom" class="inp" placeholder="Prénom" autocomplete="given-name">
+          </div>
+          <div id="name-error" style="display:none; color:var(--red); font-size:.8rem; margin-top:5px">Merci d'indiquer votre nom et votre prénom pour commencer.</div>
+        </div>
+        <div class="seg-group">
+          <span class="seg-label">Contexte</span>
+          <div class="seg" role="group" aria-label="Contexte du test">
+            <button class="seg-btn selected" data-group="ctx" data-val="pro">Professionnel<span class="sub">au travail</span></button>
+            <button class="seg-btn" data-group="ctx" data-val="perso">Personnel<span class="sub">vie quotidienne</span></button>
+          </div>
+        </div>
+        <div class="seg-group">
+          <span class="seg-label">Version</span>
+          <div class="seg" role="group" aria-label="Version du test">
+            <button class="seg-btn selected" data-group="ver" data-val="xshort">Très courte<span class="sub">15 q · ~5 min</span></button>
+            <button class="seg-btn" data-group="ver" data-val="short">Courte<span class="sub">30 q · ~10 min</span></button>
+            <button class="seg-btn" data-group="ver" data-val="long">Longue<span class="sub">45 q · ~15 min</span></button>
+            <button class="seg-btn" data-group="ver" data-val="xlong">Très longue<span class="sub">60 q · ~20 min</span></button>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%; margin-top:8px" onclick="startQuiz()">Commencer le test</button>
+      </div>
+    </div>
+
+    <div class="rules">
+      <strong>Les 3 règles d'or :</strong> tout le monde a toutes les couleurs, tous les types et tous les quadrants, dans des proportions différentes • on parle de <strong>préférences</strong>, jamais de compétences • ce questionnaire est un outil pédagogique de découverte, pas un test certifié. <em>Astuce : plus la version est longue, plus les tendances sont fiables.</em>
+    </div>
+    <div style="text-align:center; margin-top:18px">
+      <button class="btn btn-ghost" style="font-size:.82rem; opacity:.75" onclick="adminLoginOpen()">🔐 Espace formateur</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUESTIONNAIRE ================= -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="kicker" id="quiz-kicker" style="color:#B8860B"></div>
+    <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+    <div class="progress-label" id="plabel"></div>
+    <h2 class="qtitle" id="qtitle"></h2>
+    <p class="qhelp">À quel point cette affirmation vous correspond-elle ?</p>
+    <div class="options scale" id="opts"></div>
+    <div class="nav">
+      <button class="btn btn-ghost" id="btn-back" onclick="prevQ()">← Précédent</button>
+      <button class="btn btn-ghost" onclick="goHome()">Quitter</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQ()">Suivant →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RÉSULTATS ================= -->
+<section id="results">
+  <div class="wrap">
+    <!-- Bandeau bleu visible uniquement à l'impression, en haut de la 1re page -->
+    <div id="print-banner">
+      <div class="pb-flex">
+        <svg width="46" height="52" viewBox="0 0 100 112" aria-hidden="true">
+          <polygon points="50,4 95,30 95,82 50,108 5,82 5,30" fill="#fff" stroke="#E9A820" stroke-width="8" stroke-linejoin="round"/>
+          <text x="50" y="71" text-anchor="middle" font-family="Arial" font-size="42" font-weight="bold"><tspan fill="#16355C">S</tspan><tspan fill="#E9A820">D</tspan></text>
+        </svg>
+        <div>
+          <div class="pb-name" id="pb-name"></div>
+          <div class="pb-line">Stratégies de Développement</div>
+          <div class="pb-line" id="pb-date"></div>
+        </div>
+      </div>
+    </div>
+    <div class="kicker" style="color:#B8860B">Vos résultats</div>
+    <div id="mini-synth"></div>
+    <div id="full-results">
+      <p class="sub" id="res-meta" style="color:var(--gray); font-size:.9rem; margin-top:4px"></p>
+      <div id="res-models"></div>
+      <div class="disclaimer">
+        <strong>À lire avant d'interpréter :</strong> cet outil pédagogique, proposé par Stratégies de Développement, offre une première photographie de vos préférences dans le contexte choisi. Les modèles dérivés sont des approximations pédagogiques : ils ne remplacent pas les questionnaires certifiés MBTI®, 16PF®, Hogan®, Belbin®, CliftonStrengths®, Process Communication Model® (Kahler Communications), Insights Discovery® (The Insights Group) ni HBDI® (Herrmann International). Vos préférences ne disent rien de vos compétences ; fiez-vous aux tendances, pas aux décimales.
+      </div>
+    </div>
+    <div class="nav" style="margin-top:22px">
+      <button class="btn btn-ghost" onclick="goHome()">← Retour à l'accueil</button>
+      <button class="btn btn-ghost" onclick="restart()">Refaire ce test</button>
+      <button class="btn btn-primary" id="btn-other-ctx" onclick="switchContext()"></button>
+    </div>
+    <div id="admin-bar" class="nav" style="margin-top:14px; display:none">
+      <button class="btn btn-ghost" onclick="adminBack()">← Retour à l'historique</button>
+      <button class="btn btn-primary" onclick="window.print()">Imprimer ce dossier</button>
+    </div>
+    <p id="res-note" style="color:var(--gray); font-size:.8rem; margin-top:10px">✅ Vos résultats ont bien été enregistrés. Le dossier complet (les 11 modèles) pourra vous être remis et commenté par votre formateur.</p>
+    <div id="print-footer">
+      Stéphane Demarquay &nbsp;•&nbsp; Stratégies de Développement &nbsp;•&nbsp; Bourges — Centre-Val de Loire
+      <div class="pf-slogan">« Développer les personnes, révéler les organisations »</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ESPACE FORMATEUR : CONNEXION ================= -->
+<section id="admin-login" style="display:none">
+  <div class="wrap" style="max-width:520px">
+    <div class="kicker" style="color:#B8860B">Espace formateur</div>
+    <h2 class="qtitle" style="margin-top:6px">Accès réservé</h2>
+    <p style="color:var(--gray)">Cet espace est réservé à l'animateur. Saisissez le mot de passe pour consulter l'historique complet des résultats.</p>
+    <div class="seg-group" style="margin-top:14px">
+      <span class="seg-label">Mot de passe</span>
+      <input type="password" id="admin-pass" class="inp" inputmode="numeric" placeholder="••••" style="width:100%"
+             onkeydown="if(event.key==='Enter')adminTryLogin()">
+      <div id="admin-error" style="display:none; color:var(--red); font-size:.85rem; margin-top:6px">Mot de passe incorrect.</div>
+    </div>
+    <div class="nav" style="margin-top:16px">
+      <button class="btn btn-ghost" onclick="goHome()">← Retour</button>
+      <button class="btn btn-primary" onclick="adminTryLogin()">Entrer</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ESPACE FORMATEUR : HISTORIQUE ================= -->
+<section id="admin" style="display:none">
+  <div class="wrap">
+    <div class="kicker" style="color:#B8860B">Espace formateur</div>
+    <h2 class="qtitle" style="margin-top:6px">Historique des résultats</h2>
+    <p style="color:var(--gray); font-size:.92rem">Chaque test terminé est enregistré ici automatiquement, y compris lorsque plusieurs personnes passent le test en même temps. Touchez une ligne pour ouvrir le dossier complet des 11 modèles.</p>
+    <div class="nav" style="justify-content:flex-start; flex-wrap:wrap; gap:8px; margin:14px 0">
+      <button class="btn btn-ghost" onclick="adminRefresh()">🔄 Actualiser</button>
+      <button class="btn btn-ghost" onclick="adminExport()">⬇️ Exporter tout (fichier)</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('admin-import').click()">⬆️ Importer un fichier</button>
+      <input type="file" id="admin-import" accept=".json,application/json" style="display:none" onchange="adminImport(this.files)">
+      <button class="btn btn-ghost" onclick="goHome()">← Accueil</button>
+    </div>
+    <details style="background:#fff; border:1px solid #E2E6EE; border-radius:12px; padding:12px 14px; margin:4px 0 14px">
+      <summary style="cursor:pointer; font-weight:bold; color:var(--navy)">⚙️ Réglages — mot de passe &amp; synchronisation</summary>
+      <div class="seg-group" style="margin-top:12px">
+        <span class="seg-label">Changer le mot de passe formateur</span>
+        <input type="password" id="set-pass1" class="inp" placeholder="Nouveau mot de passe (4 caractères min.)" style="width:100%">
+        <button class="btn btn-ghost" style="margin-top:8px" onclick="adminChangePass()">🔑 Enregistrer le nouveau mot de passe</button>
+      </div>
+      <div class="seg-group" style="margin-top:12px">
+        <span class="seg-label">Synchronisation centralisée (service Google fourni avec le kit)</span>
+        <input type="url" id="set-endpoint" class="inp" placeholder="https://script.google.com/macros/s/…/exec" style="width:100%">
+        <div class="nav" style="justify-content:flex-start; margin-top:8px; gap:8px">
+          <button class="btn btn-ghost" onclick="adminSaveEndpoint()">💾 Enregistrer l'URL</button>
+          <button class="btn btn-ghost" onclick="adminTestEndpoint()">📡 Tester la connexion</button>
+        </div>
+        <p style="color:var(--gray); font-size:.78rem; margin-top:8px">Une fois l'URL du service collée ici et testée, chaque test terminé — sur n'importe quel téléphone — remonte automatiquement dans votre historique (et dans un Google Sheet privé de secours). Sans service, chaque appareil garde ses résultats en local : utilisez alors Exporter / Importer. La marche à suivre complète figure dans la notice de déploiement.</p>
+      </div>
+    </details>
+    <p id="admin-count" style="color:var(--gray); font-size:.85rem"></p>
+    <p id="admin-msg" style="color:#2E7D52; font-size:.85rem; display:none"></p>
+    <div id="admin-list"></div>
+    <p style="color:var(--gray); font-size:.78rem; margin-top:18px"><em>Conseil sécurité : exportez régulièrement l'ensemble des résultats vers un fichier — vous pourrez les réimporter ici à tout moment, y compris sur un autre appareil.</em></p>
+  </div>
+</section>
+
+<footer>
+  Stéphane Demarquay &nbsp;•&nbsp; Stratégies de Développement &nbsp;•&nbsp; Bourges — Centre-Val de Loire<br>
+  « Développer les personnes, révéler les organisations »
+</footer>
+
+
+<script>
+/* Programmation : Stéphane Demarquay — Stratégies de Développement. © Tous droits réservés. */
+"use strict";
+
+/* ================== FAMILLE 3 — COMPORTEMENTAUX ================== */
+const DISC_P = {
+  R:{name:"Rouge — Dominant", color:"var(--red)", letter:"D", word:"fonceur",
+     desc:{pro:"Au travail, vous décidez vite, aimez les défis et allez droit à l'essentiel.", perso:"Au quotidien, vous aimez que les choses avancent : vous prenez naturellement les commandes."}},
+  J:{name:"Jaune — Influent", color:"var(--yel)", letter:"I", word:"enthousiaste",
+     desc:{pro:"Vous êtes le moteur d'énergie : enthousiaste et communicatif, vous embarquez les autres.", perso:"Vous êtes l'âme du groupe : spontané, chaleureux, toujours partant."}},
+  V:{name:"Vert — Stable", color:"var(--grn)", letter:"S", word:"fiable",
+     desc:{pro:"Vous êtes le ciment de l'équipe : fiable, patient et à l'écoute.", perso:"Vous êtes le pilier de vos proches : loyal, disponible et apaisant."}},
+  B:{name:"Bleu — Conforme", color:"var(--blu)", letter:"C", word:"rigoureux",
+     desc:{pro:"Vous êtes la garantie qualité : rigoureux et méthodique, vous fiabilisez par l'analyse.", perso:"Tout est réfléchi et bien fait : vous comparez, planifiez et vérifiez."}},
+};
+const INS_P = {
+  RF:{name:"Rouge feu", color:"var(--red)", letter:"F", word:"déterminé", beau:"Compétitif, déterminé, orienté but.", stress:"Sous stress : agressif, cassant.", besoin:"L'apaiser : résultats rapides, essentiel."},
+  JS:{name:"Jaune soleil", color:"var(--yel)", letter:"S", word:"rayonnant", beau:"Sociable, persuasif, enthousiaste.", stress:"Sous stress : brouillon, théâtral.", besoin:"L'apaiser : attention positive, fun."},
+  VF:{name:"Vert forêt", color:"var(--grn)", letter:"V", word:"attentionné", beau:"Attentionné, patient, à l'écoute.", stress:"Sous stress : buté, effacé.", besoin:"L'apaiser : temps, sincérité, harmonie."},
+  BM:{name:"Bleu mer", color:"var(--blu)", letter:"M", word:"réfléchi", beau:"Prudent, précis, réfléchi.", stress:"Sous stress : froid, pointilleux.", besoin:"L'apaiser : faits fiables, temps d'analyse."},
+};
+const HBDI_P = {
+  A:{name:"Quadrant A — L'Analyste", color:"var(--blu)", letter:"A", word:"logique", question:"Combien ? Quoi ?", desc:"Votre cerveau préfère analyser : faits, chiffres, logique, preuves."},
+  B:{name:"Quadrant B — L'Organisateur", color:"var(--grn)", letter:"B", word:"méthodique", question:"Comment ? Quand ?", desc:"Votre cerveau préfère organiser : plans, étapes, sécurité."},
+  C:{name:"Quadrant C — Le Communicant", color:"var(--red)", letter:"C", word:"relationnel", question:"Qui ?", desc:"Votre cerveau préfère le relationnel : comprendre en échangeant, faire adhérer."},
+  D:{name:"Quadrant D — L'Innovateur", color:"var(--yel)", letter:"D", word:"imaginatif", question:"Pourquoi ? Et si… ?", desc:"Votre cerveau préfère imaginer : vision d'ensemble, idées neuves."},
+};
+
+/* ================== FAMILLE 1 — TYPOLOGIQUES ================== */
+const PCM_P = {
+  EMP:{name:"Empathique", color:"var(--emp)", letter:"E", word:"chaleureux", desc:"Perception : les émotions. Chaleureux et attentif, vous créez du lien.", besoin:"Besoin clé : être reconnu en tant que personne.", stress:"Sous stress : se sur-adapte, doute de lui."},
+  ANA:{name:"Analyseur", color:"var(--ana)", letter:"A", word:"organisé", desc:"Perception : les faits. Logique et fiable, vous structurez le temps et les dossiers.", besoin:"Besoin clé : reconnaissance du travail, temps structuré.", stress:"Sous stress : sur-contrôle, perfectionnisme."},
+  PER:{name:"Persévérant", color:"var(--per)", letter:"P", word:"engagé", desc:"Perception : les opinions. Engagé et exigeant, vous défendez ce qui est juste.", besoin:"Besoin clé : opinions et engagement reconnus.", stress:"Sous stress : croisade, jugements tranchés."},
+  IMA:{name:"Imagineur", color:"var(--ima)", letter:"I", word:"réfléchi", desc:"Perception : l'imagination. Calme et posé, la tranquillité libère vos idées.", besoin:"Besoin clé : solitude et cadre clair.", stress:"Sous stress : retrait, passivité."},
+  PRO:{name:"Promoteur", color:"var(--pro)", letter:"P", word:"audacieux", desc:"Perception : l'action. Adaptable et persuasif, l'urgence vous révèle.", besoin:"Besoin clé : excitation, défis courts.", stress:"Sous stress : passage en force."},
+  ENE:{name:"Énergiseur", color:"var(--ene)", letter:"É", word:"créatif", desc:"Perception : les réactions. Spontané et ludique, vous débloquez par l'humour.", besoin:"Besoin clé : contacts ludiques, variété.", stress:"Sous stress : râle, blâme, « oui mais »."},
+};
+/* MBTI — 4 dichotomies dérivées du Big Five (E↔E, O↔N, A↔F, C↔J) */
+const MBTI_POLES = {
+  EI:{a:"E", b:"I", an:"Extraverti", bn:"Introverti", ad:"énergie tournée vers l'extérieur", bd:"énergie tournée vers l'intérieur", from:"E"},
+  SN:{a:"N", b:"S", an:"Intuitif", bn:"Sensoriel", ad:"global, tourné vers les possibles", bd:"concret, factuel, ancré dans le présent", from:"O"},
+  TF:{a:"F", b:"T", an:"Sentiment", bn:"Pensée", ad:"décide par les valeurs et l'humain", bd:"décide par la logique et les critères", from:"A"},
+  JP:{a:"J", b:"P", an:"Jugement", bn:"Perception", ad:"aime décider, planifier, clore", bd:"aime garder ouvert, s'adapter", from:"C"},
+};
+/* Ennéagramme — 9 types (formules d'agrégation documentées) */
+const ENNEA_P = {
+  1:{name:"Type 1 — Le Perfectionniste", word:"exigeant", color:"var(--per)", desc:"Droit et consciencieux, il veut bien faire et améliorer le monde."},
+  2:{name:"Type 2 — L'Altruiste", word:"généreux", color:"var(--emp)", desc:"Attentionné et dévoué, il aime aider et se sentir utile aux autres."},
+  3:{name:"Type 3 — Le Battant", word:"performant", color:"var(--red)", desc:"Ambitieux et efficace, il vise la réussite et l'image du succès."},
+  4:{name:"Type 4 — Le Créatif", word:"sensible", color:"var(--ima)", desc:"Émotionnel et original, il cherche l'authenticité et la profondeur."},
+  5:{name:"Type 5 — L'Observateur", word:"analytique", color:"var(--blu)", desc:"Cérébral et réservé, il comprend le monde par le savoir."},
+  6:{name:"Type 6 — Le Loyaliste", word:"vigilant", color:"var(--grn)", desc:"Fidèle et prudent, il anticipe les risques et protège le groupe."},
+  7:{name:"Type 7 — L'Épicurien", word:"optimiste", color:"var(--yel)", desc:"Enthousiaste et polyvalent, il multiplie projets et plaisirs."},
+  8:{name:"Type 8 — Le Meneur", word:"puissant", color:"var(--pro)", desc:"Direct et protecteur, il prend le contrôle et défend les siens."},
+  9:{name:"Type 9 — Le Médiateur", word:"apaisant", color:"var(--grn)", desc:"Calme et conciliant, il recherche l'harmonie et évite le conflit."},
+};
+
+/* ================== FAMILLE 2 — TRAITS ================== */
+const BIG5_P = {
+  O:{name:"Ouverture", color:"var(--yel)", letter:"O", word:"curieux", desc:"Curiosité, imagination, goût pour la nouveauté et les idées."},
+  C:{name:"Conscienciosité", color:"var(--blu)", letter:"C", word:"organisé", desc:"Organisation, fiabilité, autodiscipline et sens du devoir."},
+  E:{name:"Extraversion", color:"var(--red)", letter:"E", word:"sociable", desc:"Énergie sociale, assertivité, recherche de stimulation."},
+  A:{name:"Agréabilité", color:"var(--grn)", letter:"A", word:"coopératif", desc:"Coopération, confiance, altruisme et souci des autres."},
+  N:{name:"Sensibilité émotionnelle", color:"var(--per)", letter:"N", word:"sensible", desc:"Réactivité au stress et aux émotions (le « névrosisme » du modèle OCEAN)."},
+};
+const PF16_P = {
+  EXT:{name:"Extraversion", color:"var(--red)", word:"expansif", desc:"Chaleur sociale, vivacité, aisance en groupe."},
+  ANX:{name:"Anxiété", color:"var(--per)", word:"vigilant", desc:"Tension, appréhension, réactivité émotionnelle."},
+  DUR:{name:"Fermeté d'esprit", color:"var(--blu)", word:"pragmatique", desc:"Préférence pour le concret et l'établi plutôt que l'abstrait et le nouveau."},
+  IND:{name:"Indépendance", color:"var(--pro)", word:"affirmé", desc:"Affirmation de soi, audace, volonté d'influencer."},
+  CTR:{name:"Contrôle de soi", color:"var(--grn)", word:"maîtrisé", desc:"Règle de vie, perfectionnisme, respect des normes."},
+};
+const HOGAN_P = {
+  AJU:{name:"Ajustement", color:"var(--grn)", word:"serein", desc:"Calme sous pression, résistance au stress."},
+  AMB:{name:"Ambition", color:"var(--red)", word:"ambitieux", desc:"Initiative, compétitivité, volonté de diriger."},
+  SOC:{name:"Sociabilité", color:"var(--yel)", word:"extraverti", desc:"Goût des interactions et de la visibilité sociale."},
+  SEN:{name:"Sensibilité relationnelle", color:"var(--emp)", word:"diplomate", desc:"Tact, perceptivité, souci de la relation."},
+  PRU:{name:"Prudence", color:"var(--blu)", word:"consciencieux", desc:"Autodiscipline, respect des règles, fiabilité."},
+  CUR:{name:"Curiosité", color:"var(--ima)", word:"inventif", desc:"Imagination, vision, goût des idées nouvelles."},
+  APP:{name:"Approche de l'apprentissage", color:"var(--per)", word:"apprenant", desc:"Plaisir d'apprendre et de se tenir à jour."},
+};
+
+/* ================== FAMILLE 4 — RÔLES ET FORCES ================== */
+const BELBIN_P = {
+  PRO_:{name:"Propulseur", cat:"Action", color:"var(--red)", word:"dynamique", desc:"Pousse l'équipe, aime la pression, surmonte les obstacles."},
+  ORG:{name:"Organisateur", cat:"Action", color:"var(--grn)", word:"efficace", desc:"Transforme les idées en actions concrètes et organisées."},
+  PERF:{name:"Perfectionneur", cat:"Action", color:"var(--blu)", word:"minutieux", desc:"Traque les erreurs, peaufine, livre dans les délais."},
+  COO:{name:"Coordinateur", cat:"Relation", color:"var(--navy2, #1E4275)", word:"fédérateur", desc:"Clarifie les objectifs, délègue, fait mûrir les décisions."},
+  SOU:{name:"Soutien", cat:"Relation", color:"var(--emp)", word:"coopératif", desc:"Écoute, apaise les frictions, renforce la cohésion."},
+  PRM:{name:"Promoteur", cat:"Relation", color:"var(--yel)", word:"explorateur", desc:"Explore les opportunités, développe les contacts extérieurs."},
+  CON:{name:"Concepteur", cat:"Réflexion", color:"var(--ima)", word:"créatif", desc:"Génère des idées originales, résout les problèmes difficiles."},
+  PRI:{name:"Priseur", cat:"Réflexion", color:"var(--blu)", word:"lucide", desc:"Évalue avec discernement, pèse les options avec impartialité."},
+  EXP:{name:"Expert", cat:"Réflexion", color:"var(--per)", word:"spécialiste", desc:"Apporte des connaissances et compétences pointues."},
+};
+const CLIFTON_P = {
+  EXE:{name:"Exécution", color:"var(--grn)", word:"réalisateur", desc:"Transformer les idées en résultats.", talents:"Talents types : Réalisateur, Discipline, Focus, Responsabilité, Arrangeur."},
+  INF:{name:"Influence", color:"var(--red)", word:"entraînant", desc:"Prendre la parole, convaincre, faire bouger.", talents:"Talents types : Commandement, Communication, Assurance, Charisme, Compétition."},
+  REL:{name:"Relationnel", color:"var(--emp)", word:"connecteur", desc:"Tisser des liens solides et souder l'équipe.", talents:"Talents types : Empathie, Harmonie, Connexion, Développeur, Positivité."},
+  STR:{name:"Réflexion stratégique", color:"var(--blu)", word:"stratège", desc:"Absorber, analyser et anticiper.", talents:"Talents types : Analyste, Contexte, Futuriste, Idéation, Intellection."},
+};
+</script>
+<script>
+/* Banques générées — 60 affirmations par contexte */
+const BANK_PRO = [{"d": "R", "t": "Je vais droit au but et je décide rapidement.", "b": "E"}, {"d": "J", "t": "J'aime convaincre et enthousiasmer mon auditoire.", "b": "E"}, {"d": "V", "t": "Je veille à ce que chacun se sente bien dans l'équipe.", "b": "A"}, {"d": "B", "t": "Je vérifie les détails avant de valider un travail.", "b": "C"}, {"p": "EMP", "t": "Je perçois immédiatement l'ambiance d'une équipe et l'humeur de mes collègues.", "b": "A"}, {"p": "ANA", "t": "J'aime que mon temps de travail soit organisé : agenda, plans, étapes.", "b": "C"}, {"p": "PER", "t": "En réunion, je défends mes convictions, même seul contre tous."}, {"p": "IMA", "t": "J'ai besoin de moments au calme pour produire mes meilleures réflexions.", "b": "O"}, {"p": "PRO", "t": "Au travail, j'adore les défis : plus c'est tendu, plus ça me stimule."}, {"p": "ENE", "t": "Je dédramatise souvent les situations professionnelles par une blague.", "b": "O"}, {"h": "A", "t": "Je veux comprendre le pourquoi chiffré : coûts, données, preuves."}, {"h": "B", "t": "J'avance étape par étape, selon un plan établi.", "b": "C"}, {"h": "C", "t": "Je comprends mieux un sujet en en discutant avec d'autres.", "b": "A"}, {"h": "D", "t": "J'adore explorer des idées nouvelles et faire des liens inattendus.", "b": "O"}, {"b": "N", "t": "Sous pression, je me fais facilement du souci."}, {"d": "R", "t": "Les objectifs ambitieux et la compétition me stimulent.", "b": "E"}, {"d": "J", "t": "Les échanges spontanés avec les collègues me donnent de l'énergie.", "b": "E"}, {"d": "V", "t": "Je préfère la coopération à la compétition.", "b": "A"}, {"d": "B", "t": "Je m'appuie sur des faits et des données pour argumenter.", "b": "C"}, {"p": "EMP", "t": "On me dit chaleureux : je prends naturellement soin de mes collègues.", "b": "A"}, {"p": "ANA", "t": "On me confie les dossiers complexes parce que je suis fiable et précis.", "b": "C"}, {"p": "PER", "t": "La qualité du travail passe avant ma tranquillité."}, {"p": "IMA", "t": "Mon imagination tourne en continu, même quand je parais absent en réunion.", "b": "O"}, {"p": "PRO", "t": "Je préfère agir tout de suite et ajuster ensuite, plutôt que tout planifier."}, {"p": "ENE", "t": "La routine professionnelle m'éteint : il me faut de la variété et du fun.", "b": "O"}, {"h": "A", "t": "J'évalue une idée d'abord à sa logique et à sa faisabilité."}, {"h": "B", "t": "Je sécurise l'organisation : qui fait quoi, quand, comment.", "b": "C"}, {"h": "C", "t": "L'adhésion des personnes compte autant pour moi que la qualité du plan.", "b": "A"}, {"h": "D", "t": "Je vois d'abord la vision d'ensemble avant les détails.", "b": "O"}, {"d": "B", "t": "Un cadre précis et des règles claires me rassurent.", "b": "C"}, {"d": "R", "t": "Je prends naturellement le pilotage des projets.", "b": "E"}, {"d": "J", "t": "Je préfère improviser avec brio que suivre un script.", "b": "E"}, {"d": "V", "t": "J'ai besoin de stabilité et de temps pour accepter les changements.", "b": "A"}, {"d": "B", "t": "Je préfère faire bien que faire vite.", "b": "C"}, {"p": "EMP", "t": "Une ambiance froide ou conflictuelle au travail me coûte beaucoup d'énergie.", "b": "A"}, {"p": "ANA", "t": "Je pose des questions précises jusqu'à avoir parfaitement compris.", "b": "C"}, {"p": "PER", "t": "Je repère vite ce qui n'est pas juste ou pas conforme aux valeurs."}, {"p": "IMA", "t": "Je réfléchis longuement avant de prendre la parole en groupe.", "b": "O"}, {"p": "PRO", "t": "Je sais convaincre et embarquer, surtout dans l'urgence."}, {"p": "ENE", "t": "Face à une procédure rigide, ma première réaction est « oui, mais… ».", "b": "O"}, {"h": "A", "t": "Les raisonnements rigoureux me convainquent plus que l'enthousiasme."}, {"h": "B", "t": "Je n'aime pas commencer sans savoir comment on va finir.", "b": "C"}, {"h": "C", "t": "J'apprends par l'échange et le partage d'expériences.", "b": "A"}, {"h": "D", "t": "Les cadres établis m'ennuient : et si on faisait autrement ?", "b": "O"}, {"d": "V", "t": "On dit de moi que je suis d'une fiabilité à toute épreuve.", "b": "A"}, {"d": "R", "t": "Je m'impatiente quand les projets traînent en longueur.", "b": "E"}, {"d": "J", "b": "E", "t": "Je prends la parole facilement devant un groupe."}, {"d": "V", "b": "A", "t": "Je cherche le compromis plutôt que la victoire."}, {"d": "B", "b": "C", "t": "Je respecte scrupuleusement les délais annoncés."}, {"b": "O", "t": "J'aime apprendre des sujets très éloignés de mon métier."}, {"b": "O", "t": "Les idées abstraites et les théories me stimulent."}, {"b": "N", "t": "Un imprévu professionnel peut me préoccuper longtemps."}, {"b": "N", "t": "Je ressens fortement le stress avant une échéance importante."}, {"b": "E", "t": "Une journée pleine d'interactions me donne de l'énergie."}, {"b": "A", "t": "Je fais spontanément confiance à mes interlocuteurs."}, {"b": "C", "t": "Je prépare et je planifie plutôt que d'improviser."}, {"h": "A", "t": "Je repère vite l'erreur dans un raisonnement ou un tableau de chiffres."}, {"h": "B", "b": "C", "t": "Je liste et je coche : les to-do lists sont mes alliées."}, {"h": "C", "b": "A", "t": "Je préfère résoudre un problème en équipe plutôt que seul."}, {"h": "D", "b": "O", "t": "J'imagine facilement plusieurs futurs possibles pour un même projet."}];
+const BANK_PERSO = [{"d": "R", "t": "À la maison aussi, je décide vite et j'aime que ça avance.", "b": "E"}, {"d": "J", "t": "Je suis souvent celui ou celle qui met l'ambiance.", "b": "E"}, {"d": "V", "t": "Je suis le pilier sur lequel mes proches s'appuient.", "b": "A"}, {"d": "B", "t": "Je compare et je me documente avant tout achat important.", "b": "C"}, {"p": "EMP", "t": "Je ressens immédiatement l'humeur de mes proches, même au téléphone.", "b": "A"}, {"p": "ANA", "t": "J'organise mes projets personnels avec listes, budgets et plannings.", "b": "C"}, {"p": "PER", "t": "Je défends mes valeurs en famille ou entre amis, même si ça frotte."}, {"p": "IMA", "t": "J'ai besoin de moments seuls pour me ressourcer et rêver.", "b": "O"}, {"p": "PRO", "t": "Dans mes loisirs, je recherche les sensations fortes et les défis."}, {"p": "ENE", "t": "Je transforme les corvées du quotidien en jeu ou en blague.", "b": "O"}, {"h": "A", "t": "Je veux comprendre comment fonctionnent les choses : mécanismes, chiffres."}, {"h": "B", "t": "Mes journées suivent des routines qui me conviennent bien.", "b": "C"}, {"h": "C", "t": "Je préfère les activités qui se partagent à plusieurs.", "b": "A"}, {"h": "D", "t": "Je laisse volontiers vagabonder mon imagination.", "b": "O"}, {"b": "N", "t": "Je rumine parfois longtemps les petites contrariétés."}, {"d": "R", "t": "J'organise les activités pour ne pas perdre de temps.", "b": "E"}, {"d": "J", "t": "J'adore rencontrer de nouvelles personnes.", "b": "E"}, {"d": "V", "t": "Je préfère les habitudes rassurantes aux grands changements.", "b": "A"}, {"d": "B", "t": "Chez moi, chaque chose a une place précise.", "b": "C"}, {"p": "EMP", "t": "Prendre soin de mes proches est ce qui me rend le plus heureux.", "b": "A"}, {"p": "ANA", "t": "Avant de partir en week-end, je déroule une check-list complète.", "b": "C"}, {"p": "PER", "t": "Je m'engage dans des causes qui me tiennent à cœur."}, {"p": "IMA", "t": "On me dit « dans la lune » : mon monde intérieur est très riche.", "b": "O"}, {"p": "PRO", "t": "Je dis oui aux occasions imprévues avant même de connaître les détails."}, {"p": "ENE", "t": "La routine du quotidien m'ennuie vite : il me faut du nouveau.", "b": "O"}, {"h": "A", "t": "Je compare objectivement le rapport qualité-prix avant de choisir."}, {"h": "B", "t": "Je planifie mes week-ends et mes vacances à l'avance.", "b": "C"}, {"h": "C", "t": "Les moments en famille ou entre amis me ressourcent.", "b": "A"}, {"h": "D", "t": "J'aime tester des expériences insolites.", "b": "O"}, {"d": "V", "t": "Je prends soin des autres avant de penser à moi.", "b": "A"}, {"d": "R", "t": "Dans un groupe d'amis, je prends naturellement les commandes.", "b": "E"}, {"d": "J", "t": "Je pars facilement sur un coup de tête.", "b": "E"}, {"d": "V", "t": "J'évite les conflits familiaux autant que possible.", "b": "A"}, {"d": "B", "t": "Je lis les notices et les conditions avant de m'engager.", "b": "C"}, {"p": "EMP", "t": "Les tensions familiales ou amicales m'affectent profondément.", "b": "A"}, {"p": "ANA", "t": "Je tiens mes comptes personnels avec précision.", "b": "C"}, {"p": "PER", "t": "Quand je donne ma parole à un proche, je la tiens coûte que coûte."}, {"p": "IMA", "t": "Je peux rester longtemps à contempler un paysage sans m'ennuyer.", "b": "O"}, {"p": "PRO", "t": "En vacances, je préfère l'aventure imprévue au circuit organisé."}, {"p": "ENE", "t": "Les règles trop strictes, même en vacances, me donnent envie de les contourner.", "b": "O"}, {"h": "A", "t": "Face à un choix personnel, je pèse le pour et le contre rationnellement."}, {"h": "B", "t": "Je termine une chose avant d'en commencer une autre.", "b": "C"}, {"h": "C", "t": "Je retiens mieux les histoires des gens que les chiffres.", "b": "A"}, {"h": "D", "t": "Je vois des possibilités là où d'autres voient des problèmes.", "b": "O"}, {"d": "B", "t": "Je prépare mes projets personnels dans le moindre détail.", "b": "C"}, {"d": "R", "t": "Je supporte mal d'attendre : files, retards, lenteurs.", "b": "E"}, {"d": "J", "b": "E", "t": "Je me sens à l'aise au milieu d'inconnus, en soirée comme en voyage."}, {"d": "V", "b": "A", "t": "Je préfère céder un peu plutôt que de gâcher un bon moment."}, {"d": "B", "b": "C", "t": "Je tiens mes engagements personnels, même les petits."}, {"b": "O", "t": "J'aime découvrir des cultures, des cuisines ou des musiques nouvelles."}, {"b": "O", "t": "Les grandes questions (sens, avenir, société) me passionnent."}, {"b": "N", "t": "Avant un événement important, je dors moins bien."}, {"b": "N", "t": "Les critiques, même légères, me restent en tête."}, {"b": "E", "t": "Après un week-end très social, je me sens rechargé."}, {"b": "A", "t": "Je pardonne facilement et je garde rarement rancune."}, {"b": "C", "t": "Je range et j'anticipe : je déteste faire les choses au dernier moment."}, {"h": "A", "t": "Je vérifie les informations avant de les partager."}, {"h": "B", "b": "C", "t": "Mes papiers, photos et fichiers personnels sont bien organisés."}, {"h": "C", "b": "A", "t": "Je comprends mieux une situation quand on m'en parle de vive voix."}, {"h": "D", "b": "O", "t": "Je me surprends souvent à imaginer « et si… »."}];
+const SCALE = [["Pas du tout",0],["Un peu",1],["Souvent",2],["Tout à fait",3]];
+</script>
+<script>
+/* Programmation : Stéphane Demarquay — Stratégies de Développement. © Tous droits réservés. */
+"use strict";
+
+/* ================== MOTEUR ================== */
+const pad2 = n => String(n).padStart(2,"0");
+const selections = {ctx:"pro", ver:"xshort"};
+const CTX_LABEL = {pro:"contexte professionnel", perso:"contexte personnel"};
+const VER_LABEL = {xshort:"version très courte", short:"version courte", long:"version longue", xlong:"version très longue"};
+const VER_COUNT = {xshort:15, short:30, long:45, xlong:60};
+
+let ctx="pro", ver="xshort", questions=[], qIndex=0, answers=[], fullName="";
+const $ = id => document.getElementById(id);
+const show = (h,q,r)=>{ $("home").style.display=h?"block":"none"; $("quiz").style.display=q?"block":"none"; $("results").style.display=r?"block":"none";
+  $("admin-login").style.display="none"; $("admin").style.display="none";
+  if(!r) document.body.classList.remove("admin-view");
+  window.scrollTo({top:0}); };
+const shuffled = a=>{ const b=[...a]; for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]];} return b; };
+
+document.addEventListener("click", e=>{
+  const b = e.target.closest(".seg-btn"); if(!b) return;
+  selections[b.dataset.group] = b.dataset.val;
+  b.parentElement.querySelectorAll(".seg-btn").forEach(x=>x.classList.remove("selected"));
+  b.classList.add("selected");
+});
+
+function startQuiz(){
+  const nom=($("inp-nom").value||"").trim(), prenom=($("inp-prenom").value||"").trim();
+  if(!nom || !prenom){ $("name-error").style.display="block"; $(!nom?"inp-nom":"inp-prenom").focus(); return; }
+  $("name-error").style.display="none";
+  gNom=nom; gPrenom=prenom;
+  fullName = nom+" "+prenom;
+  ctx=selections.ctx; ver=selections.ver; qIndex=0;
+  const full = ctx==="pro" ? BANK_PRO : BANK_PERSO;
+  questions = shuffled(full.slice(0, VER_COUNT[ver]));
+  answers = new Array(questions.length).fill(null);
+  $("quiz-kicker").innerHTML = "Le grand test des familles d'outils" +
+    '<span class="ctx-badge">'+CTX_LABEL[ctx]+'</span><span class="ctx-badge">'+VER_LABEL[ver]+' · '+questions.length+' affirmations</span>';
+  show(false,true,false); renderQ();
+}
+function goHome(){ show(true,false,false); }
+function restart(){ startQuiz(); }
+function switchContext(){
+  selections.ctx = (ctx==="pro"?"perso":"pro");
+  document.querySelectorAll('.seg-btn[data-group="ctx"]').forEach(b=>b.classList.toggle("selected", b.dataset.val===selections.ctx));
+  startQuiz();
+}
+function renderQ(){
+  const total = questions.length;
+  $("pfill").style.width = (qIndex/total*100)+"%";
+  $("plabel").textContent = "Affirmation "+(qIndex+1)+" / "+total;
+  $("qtitle").textContent = "« "+questions[qIndex].t+" »";
+  const opts=$("opts"); opts.innerHTML="";
+  SCALE.forEach(([lab,val])=>{
+    const b=document.createElement("button");
+    b.className="opt"+(answers[qIndex]===val?" selected":"");
+    b.textContent=lab;
+    b.onclick=()=>{ answers[qIndex]=val; markSelection(); setTimeout(()=>{ if(qIndex<questions.length-1){qIndex++; renderQ();} else updateNext(); },220); };
+    opts.appendChild(b);
+  });
+  $("btn-back").disabled = qIndex===0;
+  $("btn-next").textContent = qIndex===questions.length-1 ? "Voir mes résultats ✓" : "Suivant →";
+  updateNext();
+}
+function updateNext(){ $("btn-next").disabled = answers[qIndex]===null; }
+function markSelection(){
+  [...$("opts").children].forEach((b,idx)=>b.classList.toggle("selected", SCALE[idx][1]===answers[qIndex]));
+  updateNext();
+}
+function nextQ(){ if(answers[qIndex]===null) return; if(qIndex<questions.length-1){ qIndex++; renderQ(); } else showResults(); }
+function prevQ(){ if(qIndex>0){ qIndex--; renderQ(); } }
+
+/* ================== CALCUL — tags de base puis modèles dérivés ================== */
+function computeScores(){
+  const sum={d:{},p:{},h:{},b:{}}, max={d:{},p:{},h:{},b:{}};
+  questions.forEach((q,i)=>{
+    ["d","p","h","b"].forEach(m=>{ if(q[m]){ sum[m][q[m]]=(sum[m][q[m]]||0)+answers[i]; max[m][q[m]]=(max[m][q[m]]||0)+3; } });
+  });
+  const pct=(m,k)=> max[m][k] ? Math.round(sum[m][k]/max[m][k]*100) : 0;
+  const avg=(...v)=>Math.round(v.reduce((a,x)=>a+x,0)/v.length);
+  const P={ d:{}, p:{}, h:{}, b:{} };
+  ["R","J","V","B"].forEach(k=>P.d[k]=pct("d",k));
+  Object.keys(PCM_P).forEach(k=>P.p[k]=pct("p",k));
+  ["A","B","C","D"].forEach(k=>P.h[k]=pct("h",k));
+  ["O","C","E","A","N"].forEach(k=>P.b[k]=pct("b",k));
+  const r={};
+  const rank=o=>Object.entries(o).sort((a,b)=>b[1]-a[1]);
+  /* Directs */
+  r.disc = rank(P.d);
+  r.pcm  = rank(P.p);
+  r.hbdi = rank(P.h);
+  r.big5 = rank(P.b);
+  /* Insights : couleur DISC + type PCM apparenté (sur points cumulés) */
+  const insPair={RF:["R","PRO"],JS:["J","ENE"],VF:["V","EMP"],BM:["B","ANA"]};
+  r.ins = rank(Object.fromEntries(Object.entries(insPair).map(([k,[dk,pk]])=>{
+    const s=(sum.d[dk]||0)+(sum.p[pk]||0), x=(max.d[dk]||0)+(max.p[pk]||0);
+    return [k, x?Math.round(s/x*100):0];
+  })));
+  /* MBTI : pôles dérivés du Big Five */
+  r.mbti = { EI:P.b.E, SN:P.b.O, TF:P.b.A, JP:P.b.C };
+  r.mbtiType = (P.b.E>=50?"E":"I")+(P.b.O>=50?"N":"S")+(P.b.A>=50?"F":"T")+(P.b.C>=50?"J":"P");
+  /* Ennéagramme : 9 types dérivés */
+  r.ennea = rank({
+    1:avg(P.p.PER,P.b.C), 2:P.p.EMP, 3:avg(P.d.R,P.b.E), 4:avg(P.b.O,P.b.N), 5:avg(P.p.ANA,P.p.IMA),
+    6:avg(P.b.N,P.d.V), 7:avg(P.p.ENE,P.b.O), 8:avg(P.p.PRO,P.d.R), 9:avg(P.d.V,P.p.IMA),
+  });
+  /* 16PF : 5 facteurs globaux dérivés */
+  r.pf16 = rank({ EXT:P.b.E, ANX:P.b.N, DUR:100-P.b.O, IND:avg(P.d.R,P.p.PRO), CTR:P.b.C });
+  /* Hogan (inspiration HPI) : 7 échelles dérivées */
+  r.hogan = rank({ AJU:100-P.b.N, AMB:avg(P.d.R,P.b.E), SOC:avg(P.d.J,P.b.E), SEN:P.b.A, PRU:P.b.C, CUR:P.b.O, APP:avg(P.b.O,P.p.ANA) });
+  /* Belbin : 9 rôles dérivés */
+  r.belbin = rank({ PRO_:avg(P.d.R,P.p.PRO), ORG:avg(P.h.B,P.b.C), PERF:avg(P.d.B,P.b.C), COO:avg(P.b.E,P.b.A),
+    SOU:avg(P.d.V,P.p.EMP), PRM:avg(P.d.J,P.b.E), CON:avg(P.h.D,P.b.O), PRI:avg(P.h.A,P.p.ANA), EXP:avg(P.p.ANA,P.p.IMA) });
+  /* Clifton : 4 domaines dérivés */
+  r.clifton = rank({ EXE:avg(P.b.C,P.h.B), INF:avg(P.b.E,P.d.R), REL:avg(P.b.A,P.p.EMP), STR:avg(P.b.O,P.h.A) });
+  r.base=P;
+  return r;
+}
+
+/* ================== RENDU ================== */
+function barsHtml(ranked, profiles){
+  return '<div class="bars">'+ranked.map(([k,v])=>{
+    const p=profiles[k];
+    /* Libellé enrichi : le nom complet, et sa signification si elle n'y figure pas déjà */
+    const label = p.name + (p.name.includes("—")||!p.word ? "" : " — "+p.word);
+    return '<div class="bar-row"><span class="bar-name">'+label+'</span>'+
+      '<div class="bar-track"><div class="bar-fill" data-w="'+v+'" style="background:'+p.color+'"></div></div>'+
+      '<span class="bar-val">'+v+' %</span></div>';
+  }).join("")+'</div>';
+}
+function card(id, tag, title, sub, desc, inner, note){
+  return '<div class="card model-card" id="'+id+'">'+
+    '<div class="res-head"><div><div class="model-tag">'+tag+'</div><h2>'+title+'</h2><div class="sub">'+sub+'</div></div></div>'+
+    (desc?'<p class="res-desc">'+desc+'</p>':"")+inner+
+    (note?'<p style="margin-top:10px;font-size:.8rem;color:var(--gray)"><em>'+note+'</em></p>':"")+
+    '</div>';
+}
+const ctxd = d => typeof d==="string" ? d : d[ctx];
+
+let lastResults=null;
+function showResults(){
+  const r = computeScores(); lastResults=r;
+  saveResult(r);
+  renderResultsView(r, {fullName:fullName, ctx:ctx, ver:ver, nq:questions.length, date:new Date().toISOString()});
+  document.body.classList.remove("admin-view");
+  $("btn-other-ctx").textContent = "Comparer : refaire en "+(ctx==="pro"?"contexte personnel":"contexte professionnel");
+  show(false,false,true);
+}
+function renderResultsView(r, meta){
+  ctx = meta.ctx; /* les descriptions contextualisées lisent la variable globale */
+  const dnow = new Date(meta.date);
+  $("pb-name").textContent = "Résultats de : "+meta.fullName;
+  $("pb-date").textContent = "Test réalisé le "+pad2(dnow.getDate())+"/"+pad2(dnow.getMonth()+1)+"/"+dnow.getFullYear()+" à "+pad2(dnow.getHours())+"h"+pad2(dnow.getMinutes());
+  $("res-meta").textContent = CTX_LABEL[meta.ctx].charAt(0).toUpperCase()+CTX_LABEL[meta.ctx].slice(1)+" · "+VER_LABEL[meta.ver]+" ("+meta.nq+" affirmations) · un même questionnaire, onze lectures complémentaires en 4 familles.";
+  let html="";
+
+  /* ===== FAMILLE 1 — TYPOLOGIQUES ===== */
+  const mb=r.mbti;
+  const mbtiBars = Object.entries(MBTI_POLES).map(([k,p])=>{
+    const v=mb[k];
+    return '<div class="bar-row" style="grid-template-columns:250px 1fr 130px"><span class="bar-name">'+p.bn+' ('+p.b+')  ← →  '+p.an+' ('+p.a+')</span>'+
+      '<div class="bar-track"><div class="bar-fill" data-w="'+v+'" style="background:var(--per)"></div></div>'+
+      '<span class="bar-val">'+p.an+' '+v+' %</span></div>';
+  }).join("");
+  const mbtiDesc = Object.entries(MBTI_POLES).map(([k,p])=> mb[k]>=50 ? p.an+" ("+p.ad+")" : p.bn+" ("+p.bd+")").join(" · ");
+  html += card("mcard-1","Famille 1 · Modèles typologiques — MBTI (16 types)","Type probable : "+r.mbtiType,
+    "Quatre dichotomies dérivées de vos traits — la barre indique la force du pôle de droite.",
+    mbtiDesc+".", '<div class="bars">'+mbtiBars+'</div>',
+    "Approche pédagogique inspirée du MBTI® (Myers-Briggs) : le type exact requiert le questionnaire officiel.");
+
+  const eTop=ENNEA_P[r.ennea[0][0]];
+  html += card("mcard-2","Famille 1 · Modèles typologiques — Ennéagramme (9 types)","Type dominant : "+eTop.name,
+    "Vos 9 types, estimés à partir de vos motivations et traits.",
+    eTop.desc, barsHtml(r.ennea, ENNEA_P),
+    "L'Ennéagramme complet explore aussi ailes et flèches : ce classement est une porte d'entrée.");
+
+  const pTop=PCM_P[r.pcm[0][0]];
+  html += card("mcard-3","Famille 1 · Modèles typologiques — Process Com (6 types)","Base probable : "+pTop.name,
+    "Votre porte d'entrée dans le monde et vos besoins psychologiques.",
+    pTop.desc+" "+pTop.besoin, barsHtml(r.pcm, PCM_P),
+    pTop.stress);
+
+  /* ===== FAMILLE 2 — TRAITS ===== */
+  const b5Top=BIG5_P[r.big5[0][0]];
+  html += card("mcard-4","Famille 2 · Modèles de traits — Big Five (OCEAN)","Trait le plus marqué : "+b5Top.name,
+    "Les 5 grands traits de la recherche en psychologie.",
+    b5Top.desc, barsHtml(r.big5, BIG5_P),
+    "La « Sensibilité émotionnelle » correspond au Névrosisme du modèle OCEAN — un trait, pas un défaut.");
+
+  const pfTop=PF16_P[r.pf16[0][0]];
+  html += card("mcard-5","Famille 2 · Modèles de traits — 16PF de Cattell","Facteur global dominant : "+pfTop.name,
+    "Les 5 facteurs globaux qui chapeautent les 16 facteurs primaires de Cattell.",
+    pfTop.desc, barsHtml(r.pf16, PF16_P),
+    "Les 16 facteurs primaires (chaleur, raisonnement, stabilité…) nécessitent le questionnaire complet 16PF®.");
+
+  const hoTop=HOGAN_P[r.hogan[0][0]];
+  html += card("mcard-6","Famille 2 · Modèles de traits — Hogan","Échelle dominante : "+hoTop.name,
+    "Sept échelles inspirées de l'inventaire du « côté lumineux » (HPI).",
+    hoTop.desc, barsHtml(r.hogan, HOGAN_P),
+    "La suite Hogan complète comprend aussi le HDS (zones de risque sous stress) et le MVPI (valeurs).");
+
+  /* ===== FAMILLE 3 — COMPORTEMENTAUX ===== */
+  const dTop=DISC_P[r.disc[0][0]];
+  html += card("mcard-7","Famille 3 · Modèles comportementaux — DISC (4 couleurs)","Couleur dominante : "+dTop.name,
+    "Comportement observable — comment vous agissez.",
+    ctxd(dTop.desc), barsHtml(r.disc, DISC_P), "");
+
+  const iTop=INS_P[r.ins[0][0]];
+  html += card("mcard-8","Famille 3 · Modèles comportementaux — Insights Discovery (4 énergies)","Énergie dominante : "+iTop.name,
+    "L'énergie d'où vous partez, par beau temps comme sous stress.",
+    iTop.beau+" "+iTop.stress+" "+iTop.besoin, barsHtml(r.ins, INS_P), "");
+
+  const hTop=HBDI_P[r.hbdi[0][0]];
+  html += card("mcard-9","Famille 3 · Modèles comportementaux — HBDI (préférences cérébrales)","Quadrant dominant : "+hTop.name,
+    "Comment votre cerveau préfère penser. Question favorite : <strong>"+hTop.question+"</strong>",
+    hTop.desc, barsHtml(r.hbdi, HBDI_P),
+    "Attention : dans le HBDI, les couleurs n'ont pas le même sens que dans le DISC.");
+
+  /* ===== FAMILLE 4 — RÔLES ET FORCES ===== */
+  const beTop=BELBIN_P[r.belbin[0][0]];
+  html += card("mcard-10","Famille 4 · Rôles et forces — Belbin (9 rôles en équipe)","Rôle préféré : "+beTop.name+" ("+beTop.cat+")",
+    "Vos contributions naturelles à une équipe, en trois catégories : Action, Relation, Réflexion.",
+    beTop.desc, barsHtml(r.belbin, BELBIN_P),
+    "Belbin recommande d'identifier 2-3 rôles préférés — regardez aussi vos deuxième et troisième barres.");
+
+  const clTop=CLIFTON_P[r.clifton[0][0]];
+  html += card("mcard-11","Famille 4 · Rôles et forces — CliftonStrengths (34 talents)","Domaine de force dominant : "+clTop.name,
+    "Les 34 talents Clifton se regroupent en 4 domaines — voici votre profil de domaines.",
+    clTop.desc+" "+clTop.talents, barsHtml(r.clifton, CLIFTON_P),
+    "Le classement individuel des 34 talents nécessite l'évaluation officielle CliftonStrengths®.");
+
+  /* ===== SYNTHÈSE — les 4 familles sur une page ===== */
+  const rows=[
+    ["Famille 1 — Typologiques","MBTI", r.mbtiType, "type probable"],
+    ["","Ennéagramme", eTop.name.replace("Type ","T"), eTop.word],
+    ["","Process Com", pTop.name, pTop.word],
+    ["Famille 2 — Traits","Big Five", b5Top.name, b5Top.word],
+    ["","16PF (facteurs globaux)", pfTop.name, pfTop.word],
+    ["","Hogan (échelles)", hoTop.name, hoTop.word],
+    ["Famille 3 — Comportementaux","DISC", dTop.name, dTop.word],
+    ["","Insights Discovery", iTop.name, iTop.word],
+    ["","HBDI", hTop.name.replace("Quadrant ",""), hTop.word],
+    ["Famille 4 — Rôles & forces","Belbin", beTop.name, beTop.word],
+    ["","CliftonStrengths", clTop.name, clTop.word],
+  ];
+  html += '<div class="card model-card synth" id="mcard-12">'+
+    '<div class="kicker">Synthèse express — les 4 familles d\'outils</div>'+
+    '<h2>Votre portrait en un coup d\'œil</h2>'+
+    '<table class="synth-table"><tr><th>Famille</th><th>Modèle</th><th>Votre dominante</th><th>En un mot</th></tr>'+
+    rows.map(([f,m,n,w])=>'<tr><td style="color:#E9A820;font-weight:'+(f?'bold':'normal')+'">'+f+'</td><td>'+m+'</td><td class="bold">'+n+'</td><td><em>'+w+'</em></td></tr>').join("")+
+    '</table>'+
+    '<div class="synth-phrase">En résumé : '+(ctx==="pro"?"au travail":"au quotidien")+', vous êtes plutôt <strong>'+dTop.word+'</strong> ('+dTop.name.split(" —")[0]+'), porté par une énergie <strong>'+iTop.name+'</strong> et des besoins de type <strong>'+pTop.name+'</strong>. Votre trait le plus marqué est <strong>'+b5Top.name.toLowerCase()+'</strong>, votre cerveau aime <strong>'+({A:"analyser",B:"organiser",C:"échanger",D:"imaginer"})[r.hbdi[0][0]]+'</strong>, et en équipe vous excellez en <strong>'+beTop.name+'</strong> ('+clTop.name+').</div>'+
+    '<p class="synth-note">Onze modèles, quatre familles, une même personne : quand les dominantes convergent, la tendance est robuste ; quand elles divergent, explorez vos profils secondaires.</p>'+
+    '</div>';
+
+  $("res-models").innerHTML = html;
+
+  /* ===== Synthèse minimale à l'écran : bandeau couleur(s) DISC + hexagone(s) Process Com ===== */
+  const HEXC_DISC = { R:"#C0392B", J:"#E9A820", V:"#2E9E5B", B:"#2C6FBB" };
+  const PCM_LETTER = { EMP:"E", ANA:"A", PER:"P", IMA:"I", PRO:"Pr", ENE:"É" };
+  const topVal = arr => arr.filter(([k,v])=>v===arr[0][1]).map(([k])=>k);
+  const discTops = topVal(r.disc);              // 1 à 4 couleurs à égalité au meilleur score
+  const pcmTops  = topVal(r.pcm);               // 1 à 6 types à égalité au meilleur score
+  let bandBg;
+  if(discTops.length===1){ bandBg = HEXC_DISC[discTops[0]]; }
+  else {
+    const seg = 100/discTops.length;
+    bandBg = "linear-gradient(90deg,"+discTops.map((k,i)=>HEXC_DISC[k]+" "+(i*seg)+"% "+((i+1)*seg)+"%").join(",")+")";
+  }
+  const hexSvg = key => {
+    const L = PCM_LETTER[key];
+    const inner = L==="Pr"
+      ? '<tspan font-size="40">P</tspan><tspan font-size="28" dy="0">r</tspan>'
+      : '<tspan font-size="44">'+L+'</tspan>';
+    return '<svg class="mini-hex" width="86" height="97" viewBox="0 0 100 112" aria-label="Type Process Com">'+
+      '<polygon points="50,4 95,30 95,82 50,108 5,82 5,30" fill="#fff" stroke="#16355C" stroke-width="8" stroke-linejoin="round"/>'+
+      '<text x="50" y="72" text-anchor="middle" font-family="Arial" font-weight="bold" fill="#16355C">'+inner+'</text></svg>';
+  };
+  if($("mini-synth")) $("mini-synth").innerHTML = '<div class="mini-band" style="background:'+bandBg+'">'+pcmTops.map(hexSvg).join("")+'</div>';
+
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    document.querySelectorAll(".bar-fill").forEach(el=>el.style.width=el.dataset.w+"%");
+  }));
+}
+
+
+/* ================== PLATEFORME DE SAUVEGARDE ==================
+   Chaque test terminé est écrit sous une clé unique ("gt:res:<horodatage>_<aléa>") :
+   des passations simultanées ne peuvent donc jamais s'écraser entre elles.
+   Deux supports, utilisés ensemble quand ils existent :
+   - window.storage (stockage partagé de la plateforme, visible de tous les appareils) ;
+   - localStorage du navigateur (repli local, notamment en fichier ouvert hors plateforme). */
+let gNom="", gPrenom="";
+const store = {
+  async set(k,v){
+    let ok=false; const j=JSON.stringify(v);
+    if(window.storage && window.storage.set){ try{ await window.storage.set(k, j, true); ok=true; }catch(e){} }
+    try{ localStorage.setItem(k, j); ok=true; }catch(e){}
+    return ok;
+  },
+  async list(prefix){
+    const out={};
+    try{
+      for(let i=0;i<localStorage.length;i++){
+        const k=localStorage.key(i);
+        if(k && k.indexOf(prefix)===0){ try{ out[k]=JSON.parse(localStorage.getItem(k)); }catch(e){} }
+      }
+    }catch(e){}
+    if(window.storage && window.storage.list){
+      try{
+        const l=await window.storage.list(prefix, true);
+        const keys=(l && l.keys) || [];
+        for(const k of keys){
+          try{ const g=await window.storage.get(k, true); if(g && g.value) out[k]=JSON.parse(g.value); }catch(e){}
+        }
+      }catch(e){}
+    }
+    return out;
+  },
+  async del(k){
+    try{ localStorage.removeItem(k); }catch(e){}
+    if(window.storage && window.storage.delete){ try{ await window.storage.delete(k, true); }catch(e){} }
+  }
+};
+function saveResult(r){
+  const d=new Date();
+  const id=d.getTime().toString(36)+"_"+Math.random().toString(36).slice(2,8);
+  const rec={ id:id, date:d.toISOString(),
+    dateStr:d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()),
+    nom:gNom, prenom:gPrenom, fullName:fullName,
+    ctx:ctx, ver:ver, nq:questions.length, r:r };
+  store.set("gt:res:"+id, rec).then(ok=>{
+    const n=$("res-note");
+    if(n && !ok) n.textContent="⚠️ La sauvegarde n'a pas pu être effectuée sur cet appareil.";
+  });
+  loadCfg().then(async ()=>{ await remoteFlush(); await remotePush(rec); });
+}
+
+/* ================== ESPACE FORMATEUR (mot de passe : 1312) ================== */
+/* ---- Configuration : mot de passe + synchronisation centralisée ---- */
+const CFG={pass:"1312", endpoint:""};
+let cfgLoaded=null;
+function loadCfg(){
+  if(!cfgLoaded) cfgLoaded=(async()=>{
+    try{ const l=await store.list("gt:cfg"); const c=l["gt:cfg"];
+      if(c){ if(c.pass) CFG.pass=c.pass; if(typeof c.endpoint==="string") CFG.endpoint=c.endpoint; }
+    }catch(e){}
+  })();
+  return cfgLoaded;
+}
+function saveCfg(){ return store.set("gt:cfg", {pass:CFG.pass, endpoint:CFG.endpoint}); }
+
+/* ---- Synchronisation distante (service Google Apps Script fourni) ----
+   La page publiée sur GitHub Pages est statique : c'est ce service, gratuit,
+   qui centralise les résultats de TOUS les téléphones dans un Google Sheet privé.
+   Sans service configuré, chaque appareil garde ses résultats en local
+   (récupérables via Exporter / Importer). */
+async function remoteCall(payload, timeout){
+  if(!CFG.endpoint) return null;
+  const ctl=("AbortController" in window)?new AbortController():null;
+  const t=ctl?setTimeout(()=>ctl.abort(), timeout||12000):null;
+  try{
+    const res=await fetch(CFG.endpoint,{method:"POST",redirect:"follow",signal:ctl&&ctl.signal,
+      headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+    return await res.json();
+  }catch(e){ return {ok:false, err:String(e)}; }
+  finally{ if(t) clearTimeout(t); }
+}
+function pendingGet(){ try{return JSON.parse(localStorage.getItem("gt:pending")||"[]");}catch(e){return [];} }
+function pendingSet(a){ try{localStorage.setItem("gt:pending",JSON.stringify(a));}catch(e){} }
+async function remotePush(rec){
+  if(!CFG.endpoint) return;
+  const r=await remoteCall({action:"save", rec:rec});
+  if(!(r&&r.ok)){ const q=pendingGet(); if(!q.find(x=>x.id===rec.id)){ q.push(rec); pendingSet(q); } }
+}
+async function remoteFlush(){
+  if(!CFG.endpoint) return;
+  const q=pendingGet(); if(!q.length) return;
+  const rest=[];
+  for(const rec of q){ const r=await remoteCall({action:"save", rec:rec}); if(!(r&&r.ok)) rest.push(rec); }
+  pendingSet(rest);
+}
+
+let adminOk=false, adminCache={}, adminCurrent=null;
+function adminLoginOpen(){
+  if(adminOk){ adminOpen(); return; }
+  show(false,false,false);
+  $("admin-login").style.display="block";
+  $("admin-error").style.display="none";
+  $("admin-pass").value="";
+  setTimeout(()=>$("admin-pass").focus(),50);
+}
+async function adminTryLogin(){
+  await loadCfg();
+  const p=$("admin-pass").value;
+  let ok=(p===CFG.pass);
+  if(CFG.endpoint){
+    const r=await remoteCall({action:"checkpass", pass:p}, 8000);
+    if(r && !r.err && typeof r.ok==="boolean"){ ok=r.ok; if(r.ok && p!==CFG.pass){ CFG.pass=p; saveCfg(); } }
+  }
+  if(ok){ adminOk=true; adminOpen(); }
+  else{ $("admin-error").style.display="block"; $("admin-pass").select(); }
+}
+function adminOpen(){
+  show(false,false,false);
+  $("admin").style.display="block";
+  loadCfg().then(()=>{ $("set-endpoint").value=CFG.endpoint||""; });
+  adminRefresh();
+}
+function adminMsg(t){
+  const m=$("admin-msg"); m.textContent=t; m.style.display="block";
+  clearTimeout(adminMsg._t); adminMsg._t=setTimeout(()=>m.style.display="none", 6000);
+}
+async function adminRefresh(){
+  $("admin-list").innerHTML='<p style="color:var(--gray)">Chargement…</p>';
+  await loadCfg(); await remoteFlush();
+  adminCache = await store.list("gt:res:");
+  let syncNote="";
+  if(CFG.endpoint){
+    const r=await remoteCall({action:"list", pass:CFG.pass});
+    if(r && r.ok && Array.isArray(r.resultats)){
+      for(const v of r.resultats){
+        if(v && v.id && v.r){ const k="gt:res:"+v.id; if(!adminCache[k]){ adminCache[k]=v; store.set(k,v); } }
+      }
+      syncNote=" · synchronisation ✓ (tous les appareils)";
+    } else syncNote=" · ⚠️ synchronisation injoignable — résultats de cet appareil seulement";
+  } else syncNote=" · synchronisation non configurée (⚙️ Réglages) — résultats de cet appareil seulement";
+  const recs = Object.entries(adminCache)
+    .map(([k,v])=>({k:k, v:v}))
+    .filter(x=>x.v && x.v.r && x.v.date)
+    .sort((a,b)=> a.v.date<b.v.date ? 1 : -1);
+  $("admin-count").textContent = (recs.length
+    ? recs.length+" résultat"+(recs.length>1?"s":"")+" enregistré"+(recs.length>1?"s":"")+" — du plus récent au plus ancien."
+    : "Aucun résultat enregistré pour le moment. Les tests terminés apparaîtront ici (utilisez 🔄 Actualiser pendant une session en cours).") + syncNote;
+  const wrap=document.createElement("div");
+  recs.forEach(x=>{
+    const v=x.v, d=new Date(v.date);
+    const row=document.createElement("div"); row.className="adm-row";
+    const main=document.createElement("div"); main.className="adm-main";
+    const t=document.createElement("div"); t.className="adm-title";
+    t.textContent = v.dateStr+" - "+(v.nom||"").toUpperCase()+" "+(v.prenom||"");
+    const sb=document.createElement("div"); sb.className="adm-sub";
+    sb.textContent = pad2(d.getHours())+"h"+pad2(d.getMinutes())+" · "+CTX_LABEL[v.ctx]+" · "+VER_LABEL[v.ver]+" ("+v.nq+" affirmations)";
+    main.appendChild(t); main.appendChild(sb);
+    const go=document.createElement("span"); go.className="adm-open"; go.textContent="Voir le dossier →";
+    const del=document.createElement("button"); del.className="adm-del"; del.textContent="🗑"; del.title="Supprimer ce résultat";
+    del.onclick=(e)=>{ e.stopPropagation();
+      if(confirm("Supprimer définitivement le résultat de "+v.fullName+" ("+v.dateStr+") ?"))
+        store.del(x.k)
+          .then(()=> CFG.endpoint ? remoteCall({action:"delete", pass:CFG.pass, id:v.id}) : null)
+          .then(adminRefresh); };
+    row.onclick=()=>adminShow(x.k);
+    row.appendChild(main); row.appendChild(go); row.appendChild(del);
+    wrap.appendChild(row);
+  });
+  $("admin-list").innerHTML=""; $("admin-list").appendChild(wrap);
+}
+function adminShow(key){
+  const v=adminCache[key]; if(!v) return;
+  adminCurrent=key;
+  renderResultsView(v.r, {fullName:v.fullName, ctx:v.ctx, ver:v.ver, nq:v.nq, date:v.date});
+  show(false,false,true);
+  document.body.classList.add("admin-view");
+}
+function adminBack(){ document.body.classList.remove("admin-view"); adminOpen(); }
+function adminExport(){
+  const recs=Object.values(adminCache).filter(v=>v && v.r);
+  if(!recs.length){ adminMsg("Rien à exporter pour le moment."); return; }
+  const d=new Date();
+  const payload={ app:"Grand Test des familles d'outils — Stratégies de Développement",
+    format:1, exporte:d.toISOString(), nombre:recs.length, resultats:recs };
+  const blob=new Blob([JSON.stringify(payload,null,1)], {type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="Grand_Test_Resultats_"+d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate())+".json";
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ if(URL.revokeObjectURL) URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  adminMsg("Export téléchargé : "+recs.length+" résultat(s). Conservez ce fichier en lieu sûr.");
+}
+async function adminImport(files){
+  if(!files || !files[0]) return;
+  try{
+    const txt=await files[0].text();
+    const data=JSON.parse(txt);
+    const recs=Array.isArray(data)?data:(data.resultats||data.records||[]);
+    let added=0, skipped=0;
+    for(const v of recs){
+      if(!v || !v.id || !v.r){ skipped++; continue; }
+      if(adminCache["gt:res:"+v.id]){ skipped++; continue; }
+      await store.set("gt:res:"+v.id, v); added++;
+    }
+    $("admin-import").value="";
+    await adminRefresh();
+    adminMsg("Import terminé : "+added+" résultat(s) ajouté(s)"+(skipped?", "+skipped+" déjà présent(s) ou ignoré(s)":"")+".");
+  }catch(e){
+    adminMsg("⚠️ Fichier illisible : vérifiez qu'il s'agit bien d'un export de ce test.");
+  }
+}
+
+/* ---- Réglages formateur : mot de passe + synchronisation ---- */
+async function adminChangePass(){
+  const np=$("set-pass1").value.trim();
+  if(np.length<4){ adminMsg("⚠️ Choisissez un mot de passe d'au moins 4 caractères."); return; }
+  const old=CFG.pass; CFG.pass=np; await saveCfg();
+  if(CFG.endpoint){
+    const r=await remoteCall({action:"setpass", pass:old, neuf:np});
+    adminMsg(r && r.ok ? "🔑 Mot de passe modifié partout (cet appareil + service de synchronisation)."
+      : "🔑 Mot de passe modifié sur cet appareil, mais ⚠️ le service n'a pas pu être mis à jour — réessayez avec une connexion.");
+  } else {
+    adminMsg("🔑 Mot de passe modifié. Sans synchronisation configurée, il ne vaut que sur cet appareil (les autres gardent l'ancien).");
+  }
+  $("set-pass1").value="";
+}
+async function adminSaveEndpoint(){
+  await loadCfg();
+  CFG.endpoint=$("set-endpoint").value.trim();
+  await saveCfg();
+  adminMsg(CFG.endpoint ? "🔗 URL de synchronisation enregistrée sur cet appareil. Faites « Tester la connexion »."
+                        : "Synchronisation désactivée (URL vide).");
+}
+async function adminTestEndpoint(){
+  const url=$("set-endpoint").value.trim();
+  if(!url){ adminMsg("Saisissez d'abord l'URL du service (…/exec)."); return; }
+  CFG.endpoint=url; await saveCfg();
+  adminMsg("Connexion en cours…");
+  const r=await remoteCall({action:"ping"}, 15000);
+  adminMsg(r && r.ok ? "✅ Connexion réussie — la centralisation des résultats est active."
+    : "❌ Connexion impossible. Vérifiez l'URL (elle doit finir par /exec) et le déploiement du script (accès : « Tout le monde »).");
+  adminRefresh();
+}
+
+/* Navigation clavier */
+document.addEventListener("keydown", e=>{
+  if($("quiz").style.display!=="block") return;
+  const opts=[...$("opts").children];
+  if(e.key>="1" && e.key<=String(opts.length)) opts[+e.key-1].click();
+  if(e.key==="ArrowRight") nextQ();
+  if(e.key==="ArrowLeft") prevQ();
+});
+console.log("© Stéphane Demarquay — Stratégies de Développement");
+</script>
+</body>
+</html>
